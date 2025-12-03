@@ -8,12 +8,12 @@
 //      credit: Caroline
 #include <string>
 #include <iostream>
-#include <csdio>
+#include <cstdio>
 #include <map>
 #include <queue>
 #include "pagerTools.h"
 #include "frame.h"
-#include "fifo.h"
+#include "FIFO.h"
 #include "LRU.h"
 #include "MRU.h"
 #include "random.h"
