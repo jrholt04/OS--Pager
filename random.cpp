@@ -1,13 +1,18 @@
 #include "random.h"
 
 int pgRandom(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
-    int pageFaults = 0;
+    int totalPageFaults = 0;
     int vic;
     
     for (auto it = pages.begin(); it != pages.end(); ++it) {
         string pId = it->first;
         int pg;
         bool hit;
+        int processPageFaults = 0;
+
+        if(verbose){
+            cout << "Pid: " << pId << endl;
+        }
 
         while(!pages[pId].empty()){
             pg = pages[pId].front();
@@ -25,8 +30,9 @@ int pgRandom(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, b
             }
             
             if(!hit){
-                pageFaults++;
-
+                totalPageFaults++;
+                processPageFaults++;
+                
                 if(verbose){
                     cout << "Page Fault" << endl;
                 }
@@ -45,7 +51,10 @@ int pgRandom(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, b
                 
             }
         } 
+        if(verbose){
+            cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
+        }
     }
 
-    return pageFaults;
+    return totalPageFaults;
 }

@@ -45,6 +45,7 @@ void printPagerHelp(void) {
     cout << endl << endl
          << "This is a Paging simulator, with the ability to simulate First In First Out (FCFS), Most Recently Used (MRU), Least Recently Used (LRU), Random (RANDOM)" << endl << endl
          << "The program can be called with these command flags: " << endl << endl
+         << "\n Usage: ./pager <cmd flags(optional)> <file name (optional)>" << endl
          << "\t--type {FIFO, MRU, LRU, RANDOM}" << endl
          << "\t\tSelects what Paging algorithm you would like to select. The default is FIFO." << endl
          << "\t--verbose or --v" << endl
@@ -55,8 +56,6 @@ void printPagerHelp(void) {
          << "\t\tthe input will set the number of pages in the simulation" << endl
          << "\t--framesize or --fs" << endl
          << "\t\tthe input will set the size of the frames" << endl
-         << "\t--file {FILEPATH} or --f {FILEPATH}" << endl
-         << "\t\tThe input file that contains the process/memory access information." << endl
          << "\t--help or --h" << endl
          << "\t\tPrints out this helpful how-to!" << endl
          << endl;

@@ -55,26 +55,26 @@ int main (int argc, char **argv){
                 return 0;
             }
         }
-        if (arg == "--frames" || arg == "--f"){
+        else if (arg == "--frames" || arg == "--f"){
             frameNumbers = stoi(argv[i + 1]);
             if (frameNumbers <= 0){
-                cout << "Invalid frame number." << endl;
+                cout << "Invalid number of frames." << endl;
                 exit(1);
             }
             i++;
         }
-        if (arg == "--verbose" || arg == "--v"){
+        else if (arg == "--verbose" || arg == "--v"){
             verbose = true;
         }
-        if (arg == "--pages" || arg == "--p"){
+        else if (arg == "--pages" || arg == "--p"){
             pageNumbers = stoi(argv[i + 1]);
             if (pageNumbers <= 0){
-                cout << "Invalid page number." << endl;
+                cout << "Invalid number of pages." << endl;
                 exit(1);
             }
             i++;
         }
-        if (arg == "--framesize" || arg == "--fs"){
+        else if (arg == "--framesize" || arg == "--fs"){
             framesize = stoi(argv[i + 1]);
             if (framesize <= 0){
                 cout << "Invalid frame size." << endl;
@@ -82,13 +82,21 @@ int main (int argc, char **argv){
             }
             i++; 
         }
-        if (arg == "--file" || arg == "--f"){
+        else if (arg == "--file" || arg == "--f"){
             fileName = argv[i + 1];
             i++;
         }
-         if (arg == "--help" || arg == "--h") {
+        else if (arg == "--help" || arg == "--h") {
             printPagerHelp();
             return 0;
+        }
+        // is the last element of input then it should be a file ;
+        else if (argc - 1 == i){
+            fileName = argv[i];
+        }
+        else {
+            cout << "invalid flags --help for inforamtion on how to call pager" << endl;
+            exit(1);
         }
     }   
 
@@ -98,7 +106,7 @@ int main (int argc, char **argv){
         cout << "frame size: " << framesize << endl;
         cout << "number of frames: " << frameNumbers << endl;
         cout << "number of pages: " << pageNumbers << endl;
-        cout << "verbose: " << verbose << endl;
+        cout << "verbose: " << verbose << endl << endl;
     }
     
     Frame* frames = new Frame[frameNumbers];

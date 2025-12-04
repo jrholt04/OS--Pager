@@ -7,7 +7,7 @@
 #include "FIFO.h"
 
 int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
-    int pageFaults = 0;
+    int totalPageFaults = 0;
     queue<int> victims;
     int vic;
 
@@ -20,6 +20,11 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
         string pId = it->first;
         int pg;
         bool hit;
+        int processPageFaults = 0;
+
+        if(verbose){
+            cout << "Pid: " << pId << endl;
+        }
 
         while(!pages[pId].empty()){
             pg = pages[pId].front();
@@ -37,7 +42,8 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
             }
             
             if(!hit){
-                pageFaults++;
+                totalPageFaults++;
+                processPageFaults++;
 
                 if(verbose){
                     cout << "Page Fault" << endl;
@@ -59,7 +65,10 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
                 victims.push(vic);
             }
         } 
+        if(verbose){
+            cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
+        }
     }
     
-    return pageFaults;
+    return totalPageFaults;
 }
