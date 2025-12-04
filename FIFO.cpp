@@ -11,14 +11,16 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
     queue<int> victims;
     int vic;
 
-    for (int i = 0; i < frameNumbers; i++) {
+    //pick the first things to fill up the frames
+    for (int i = 0; i < frameNumbers; i++) { 
         victims.push(i);
     }
     
     for (auto it = pages.begin(); it != pages.end(); ++it) {
         string pId = it->first;
         int pg;
-        
+        bool hit;
+
         while(!pages[pId].empty()){
             pg = pages[pId].front();
             pages[pId].pop();
@@ -26,9 +28,9 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
             if(verbose){
                 cout << "Accessing page: " << pg << endl;
             } 
-            bool hit = false;
+            hit = false;
             for (int i = 0; i < frameNumbers; i++) {
-                if (frames[i].getValid() && frames[i].getPageNum() == pg) {
+                if (frames[i].getPageNum() == pg) {
                     hit = true;
                     break;
                 }
