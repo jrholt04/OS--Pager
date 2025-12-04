@@ -27,12 +27,12 @@ int main (int argc, char **argv){
     int pageNumbers = 8;
     int framesize = 512;
     bool verbose = false;
-    map<string id, queue<int>> pages;
+    map<string, queue<int>> pages;
     Frame frames[frameNumbers];
 
     for (int i = 1; i < argc; ++i) { 
         string arg = argv[i];
-        if (arg == "--type" || arg == "-t"){
+        if (arg == "--type" || arg == "--t"){
             string inputType = argv[i + 1];
             if (inputType == "FIFO" || inputType == "fifo"){
                 type = "fifo";
@@ -55,10 +55,7 @@ int main (int argc, char **argv){
                 return 0;
             }
         }
-        if (arg == "--verbose" || arg == "--v"){
-            verbose = true;
-        }
-        if (arg == "--frames" || arg == "-f"){
+        if (arg == "--frames" || arg == "--f"){
             frameNumbers = stoi(argv[i + 1]);
             if (frameNumbers <= 0){
                 cout << "Invalid frame number." << endl;
@@ -67,7 +64,10 @@ int main (int argc, char **argv){
             frames[frameNumbers];
             i++;
         }
-        if (arg == "--pages" || arg == "-p"){
+        if (arg == "--verbose" || arg == "--v"){
+            verbose = true;
+        }
+        if (arg == "--pages" || arg == "--p"){
             pageNumbers = stoi(argv[i + 1]);
             if (pageNumbers <= 0){
                 cout << "Invalid page number." << endl;
@@ -75,7 +75,7 @@ int main (int argc, char **argv){
             }
             i++;
         }
-        if (arg == "--framesize" || arg = "-fs"){
+        if (arg == "--framesize" || arg == "--fs"){
             framesize = stoi(argv[i + 1]);
             if (framesize <= 0){
                 cout << "Invalid frame size." << endl;
@@ -97,24 +97,24 @@ int main (int argc, char **argv){
         cout << "type: "<<type << endl;
         cout << "fileName: " << fileName << endl;
         cout << "frame size: " << framesize << endl;
-        cout << "number of frames: " << frames << endl;
-        cout << "number of pages: " << pages << endl;
+        cout << "number of frames: " << frameNumbers << endl;
+        cout << "number of pages: " << pageNumbers << endl;
         cout << "verbose: " << verbose << endl;
     }
    
     pages = readMemoryLocations(fileName, pageNumbers, framesize);
     
     if (type == "fifo") {
-        fifo(frames, pages, frameszie, verbose);
+        fifo(frames, pages, verbose);
     }
     else if (type == "lru") {
-        lru(frames, pages, framesize, verbose);
+        lru(frames, pages, verbose);
     }
     else if (type == "mru") {
-        mru(frames, pages, framesize, verbose);
+        mru(frames, pages, verbose);
     }
     else if (type == "random") {
-        random(frames, pages, framesize, verbose);
+        pgRandom(frames, pages, verbose);
     }
     
     return 0;    
