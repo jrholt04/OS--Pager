@@ -39,6 +39,10 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
             if(!hit){
                 pageFaults++;
 
+                if(verbose){
+                    cout << "Page Fault" << endl;
+                }
+
                 vic = victims.front();
                 victims.pop();
                 

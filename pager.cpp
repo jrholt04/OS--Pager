@@ -114,7 +114,7 @@ int main (int argc, char **argv){
         mru(frames, pages, verbose);
     }
     else if (type == "random") {
-        pgRandom(frames, pages, verbose);
+        pageFaults = pgRandom(frames, pages, frameNumbers, verbose);
     }
 
     cout << "page faults: " << pageFaults << endl;

@@ -41,10 +41,6 @@ map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, in
     return pages;
 }
 
-void printVerbose(void) {
-    return;
-}
-
 void printPagerHelp(void) {
     cout << endl << endl
          << "This is a Paging simulator, with the ability to simulate First In First Out (FCFS), Most Recently Used (MRU), Least Recently Used (LRU), Random (RANDOM)" << endl << endl
