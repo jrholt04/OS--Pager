@@ -20,10 +20,12 @@ public:
     string getId(void) const;
     int getFreq(void) const;
     bool getValid(void) const;
+    int getPageNum(void) const;
 
     void setId(string inputId);
     void setFrequency(int inputFreq);
     void toggleValid(void);
+    void setPageNum(int pgNum);
 
 private:
     int pageNumber;

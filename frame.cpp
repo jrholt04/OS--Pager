@@ -10,6 +10,7 @@ Frame::Frame(void) {
     id = "";
     frequency = 0;
     valid = false;
+    pageNumber = -1;
 }
 
 Frame::~Frame(void) {}
@@ -26,6 +27,10 @@ bool Frame::getValid(void) const {
     return valid;
 }
 
+int Frame::getPageNum(void) const{
+    return pageNumber;
+}
+
 void Frame::toggleValid(void) {
     valid = !valid;
 }
@@ -36,4 +41,8 @@ void Frame::setId(string inputId) {
 
 void Frame::setFrequency(int inputFreq) {
     frequency = inputFreq;
+}
+
+void Frame::setPageNum(int pgNum){
+    pageNumber = pgNum;
 }

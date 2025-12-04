@@ -21,14 +21,14 @@
 using namespace std;
 
 int main (int argc, char **argv){
-    string type = "FIFO";
+    int pageFaults;
+    string type = "fifo";
     string fileName = "pager.in";
     int frameNumbers = 3;
     int pageNumbers = 8;
     int framesize = 512;
     bool verbose = false;
     map<string, queue<int>> pages;
-    Frame frames[frameNumbers];
 
     for (int i = 1; i < argc; ++i) { 
         string arg = argv[i];
@@ -61,7 +61,6 @@ int main (int argc, char **argv){
                 cout << "Invalid frame number." << endl;
                 exit(1);
             }
-            frames[frameNumbers];
             i++;
         }
         if (arg == "--verbose" || arg == "--v"){
@@ -101,11 +100,12 @@ int main (int argc, char **argv){
         cout << "number of pages: " << pageNumbers << endl;
         cout << "verbose: " << verbose << endl;
     }
-   
-    pages = readMemoryLocations(fileName, pageNumbers, framesize);
     
+    Frame* frames = new Frame[frameNumbers];
+    pages = readMemoryLocations(fileName, pageNumbers, framesize);
+
     if (type == "fifo") {
-        fifo(frames, pages, verbose);
+        pageFaults = fifo(frames, pages, frameNumbers, verbose);
     }
     else if (type == "lru") {
         lru(frames, pages, verbose);
@@ -116,6 +116,9 @@ int main (int argc, char **argv){
     else if (type == "random") {
         pgRandom(frames, pages, verbose);
     }
-    
+
+    cout << "page faults: " << pageFaults << endl;
+    delete[] frames;
+
     return 0;    
 }
