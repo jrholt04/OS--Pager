@@ -16,6 +16,7 @@
 #include "FIFO.h"
 #include "LRU.h"
 #include "MRU.h"
+#include "LFU.h"
 #include "random.h"
 
 using namespace std;
@@ -32,7 +33,7 @@ int main (int argc, char **argv){
 
     for (int i = 1; i < argc; ++i) { 
         string arg = argv[i];
-        if (arg == "--type" || arg == "--t"){
+        if (arg == "--type" || arg == "-t"){
             string inputType = argv[i + 1];
             if (inputType == "FIFO" || inputType == "fifo"){
                 type = "fifo";
@@ -46,6 +47,10 @@ int main (int argc, char **argv){
                 type = "mru";
                 i++;
             }
+	    else if (inputType == "LFU" || inputType == "lfu") {
+	      type = "lfu";
+	      i++;
+	    }
             else if (inputType == "RANDOM" || inputType == "random") {
                 type = "random";
                 i++;
@@ -55,7 +60,7 @@ int main (int argc, char **argv){
                 return 0;
             }
         }
-        else if (arg == "--frames" || arg == "--f"){
+        else if (arg == "--frames" || arg == "-f"){
             frameNumbers = stoi(argv[i + 1]);
             if (frameNumbers <= 0){
                 cout << "Invalid number of frames." << endl;
@@ -63,10 +68,10 @@ int main (int argc, char **argv){
             }
             i++;
         }
-        else if (arg == "--verbose" || arg == "--v"){
+        else if (arg == "--verbose" || arg == "-v"){
             verbose = true;
         }
-        else if (arg == "--pages" || arg == "--p"){
+        else if (arg == "--pages" || arg == "-p"){
             pageNumbers = stoi(argv[i + 1]);
             if (pageNumbers <= 0){
                 cout << "Invalid number of pages." << endl;
@@ -74,7 +79,7 @@ int main (int argc, char **argv){
             }
             i++;
         }
-        else if (arg == "--framesize" || arg == "--fs"){
+        else if (arg == "--framesize" || arg == "-fs"){
             framesize = stoi(argv[i + 1]);
             if (framesize <= 0){
                 cout << "Invalid frame size." << endl;
@@ -82,11 +87,11 @@ int main (int argc, char **argv){
             }
             i++; 
         }
-        else if (arg == "--file" || arg == "--f"){
+        else if (arg == "--file" || arg == "-f"){
             fileName = argv[i + 1];
             i++;
         }
-        else if (arg == "--help" || arg == "--h") {
+        else if (arg == "--help" || arg == "-h") {
             printPagerHelp();
             return 0;
         }
@@ -120,6 +125,9 @@ int main (int argc, char **argv){
     }
     else if (type == "mru") {
         mru(frames, pages, verbose);
+    }
+    else if (type == "lfu") {
+      pageFaults = lfu(frames, pages, frameNumbers, verbose);
     }
     else if (type == "random") {
         pageFaults = pgRandom(frames, pages, frameNumbers, verbose);
