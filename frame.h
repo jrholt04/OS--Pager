@@ -24,6 +24,7 @@ public:
 
     void setId(string inputId);
     void setFrequency(int inputFreq);
+    void incFrequency(void);
     void toggleValid(void);
     void setPageNum(int pgNum);
 

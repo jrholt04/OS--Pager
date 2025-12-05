@@ -43,6 +43,10 @@ void Frame::setFrequency(int inputFreq) {
     frequency = inputFreq;
 }
 
+void Frame::incFrequency(void) {
+  frequency++;
+}
+
 void Frame::setPageNum(int pgNum){
     pageNumber = pgNum;
 }
