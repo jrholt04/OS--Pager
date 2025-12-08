@@ -6,7 +6,7 @@
 //  sources: 
 //      Map: https://www.geeksforgeeks.org/cpp/map-associative-containers-the-c-standard-template-library-stl/ accessed 12/3/25
 //      credit: Caroline
-
+//      Dynamic arrays: https://cplusplus.com/forum/beginner/235498/#google_vignette accessed 12/3/25
 #include <string>
 #include <iostream>
 #include <cstdio>
