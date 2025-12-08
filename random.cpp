@@ -1,3 +1,8 @@
+//File: random.cpp
+//Author: J Holt, N Neagle, and A Seng, Transy U
+//Course: CS 3074 Operating Systems
+// 
+//  the random is a page swapping algorithm that swaps pages randomly this is the implementation of that algorithm
 #include "random.h"
 
 int pgRandom(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
