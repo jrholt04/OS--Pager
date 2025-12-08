@@ -66,10 +66,6 @@ int main (int argc, char **argv){
       }
       i++; 
     }
-    else if (arg == "--file" || arg == "-f"){
-      fileName = argv[i + 1];
-      i++;
-    }
     else if (arg == "--help" || arg == "-h") {
       printPagerHelp();
       return 0;

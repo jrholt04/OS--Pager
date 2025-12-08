@@ -72,7 +72,7 @@ void printPagerHelp(void) {
          << "\n Usage: ./pager <cmd flags(optional)> <file name (optional)>" << endl
          << "\t--type or -t {FIFO, MRU, LRU, RANDOM}" << endl
          << "\t\tSelects what Paging algorithm you would like to select. The default is FIFO." << endl
-	 << "\t--verbose or -v" << endl
+	       << "\t--verbose or -v" << endl
          << "\t\tPrints out a detailed description of the processes and information related to the Pager" << endl
          << "\t--frames or -fr" << endl
          << "\t\tthe input will set the number of frames in the simulation" << endl
@@ -82,8 +82,6 @@ void printPagerHelp(void) {
          << "\t\tthe input will set the size of the frames" << endl
          << "\t--help or -h" << endl
          << "\t\tPrints out this helpful how-to!" << endl
-	 << "\t--file or -f {FILE NAME}" << endl
-	 << "\t\tUses the given file name as the input file. The default is pager.in." << endl
          << endl;
 }
 
