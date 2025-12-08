@@ -26,4 +26,8 @@ map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, in
 
 void printPagerHelp(void);
 
+void swapFrame(Frame frames[], int page, string pId, int frameCount, int victim);
+
+bool tryHitFrame(Frame frames[], int page, int frameCount);
+
 #endif 

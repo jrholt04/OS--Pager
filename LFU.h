@@ -22,9 +22,6 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool ver
 // Tests if we have the the page in the frames array
 bool tryHitFrame(Frame frames[], int page, int frameCount);
 
-// Swaps out the least frequently used frame with the necessary page, returns the number of the frame swapped
-int swapFrame(Frame frames[], int page, string pId, int frameCount);
-
 // finds the least frequently used frame, returns the frame number
 int findLeastFreqUsed(Frame frames[], int frameCount);
 

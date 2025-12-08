@@ -5,16 +5,14 @@
 //  the fifo is a page swapping algorithm that swaps out the first item in the queue
 //  this is the implmentation of that algorithm
 #include "FIFO.h"
+#include "pagerTools.h"
 
 int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
     int totalPageFaults = 0;
     queue<int> victims;
     int vic;
 
-    //pick the first things to fill up the frames
-    for (int i = 0; i < frameNumbers; i++) { 
-        victims.push(i);
-    }
+    for (int i = 0; i < frameNumbers; i++) victims.push(i);
     
     for (auto it = pages.begin(); it != pages.end(); ++it) {
         string pId = it->first;
@@ -22,53 +20,33 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
         bool hit;
         int processPageFaults = 0;
 
-        if(verbose){
-            cout << "Pid: " << pId << endl;
-        }
+        if(verbose) cout << "Pid: " << pId << endl;
 
         while(!pages[pId].empty()){
             pg = pages[pId].front();
             pages[pId].pop();
             
-            if(verbose){
-                cout << "Accessing page: " << pg << endl;
-            } 
-            hit = false;
-            for (int i = 0; i < frameNumbers; i++) {
-                if (frames[i].getPageNum() == pg) {
-                    hit = true;
-                    break;
-                }
-            }
+            if(verbose) cout << "Accessing page: " << pg << endl;
+
+            hit = tryHitFrame(frames, pg, frameNumbers);
             
             if(!hit){
                 totalPageFaults++;
                 processPageFaults++;
 
-                if(verbose){
-                    cout << "Page Fault" << endl;
-                }
+                if(verbose) cout << "Page Fault" << endl;
 
                 vic = victims.front();
                 victims.pop();
-                
-                if (!frames[vic].getValid()) {
-                    frames[vic].toggleValid();
-                }
-                frames[vic].setPageNum(pg);
-                frames[vic].setId(pId);
 
-                if(verbose){
-                    cout << "Page: " << pg << " is now in frame: " << vic << endl;
-                } 
+		swapFrame(frames, pg, pId, frameNumbers, vic);
+                
+                if(verbose) cout << "Page: " << pg << " is now in frame: " << vic << endl;
                 
                 victims.push(vic);
             }
-        } 
-        if(verbose){
-            cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
         }
+        if(verbose) cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
     }
-    
     return totalPageFaults;
 }

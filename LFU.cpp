@@ -6,6 +6,7 @@
 //  this is the implmentation of that algorithm
 
 #include "LFU.h"
+#include "pagerTools.h"
 
 int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose){
   int totalPageFaults = 0;
@@ -32,8 +33,10 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool ver
 	processPageFaults++;
 	
 	if(verbose) cout << "Page Fault" << endl;
+
+	victim = findLeastFreqUsed(frames, frameCount);
     	
-	victim = swapFrame(frames, pg, pId, frameCount);
+	swapFrame(frames, pg, pId, frameCount, victim);
 	
 	if(verbose) cout << "Page: " << pg << " is now in frame: " << victim << endl;
         
@@ -43,30 +46,6 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool ver
   }
   return totalPageFaults;
 }
-
-int swapFrame(Frame frames[], int page, string pId, int frameCount) {
-  int vic = findLeastFreqUsed(frames, frameCount);
-  
-  if (!frames[vic].getValid()) {
-    frames[vic].toggleValid();
-  }
-  frames[vic].setPageNum(page);
-  frames[vic].setId(pId);
-  
-  return vic;
-}
-
-bool tryHitFrame(Frame frames[], int page, int frameCount) {
-  for (int i = 0; i < frameCount; i++) {
-    if (frames[i].getPageNum() == page) {
-      frames[i].incFrequency();
-      return true;
-    }
-  }
-  return false;
-}
-    
-    
 
 int findLeastFreqUsed(Frame frames[], int frameCount) {
   int lowestFreq = -1;

@@ -60,3 +60,23 @@ void printPagerHelp(void) {
          << "\t\tPrints out this helpful how-to!" << endl
          << endl;
 }
+
+// swaps the frame information of the victim frame with new page
+void swapFrame(Frame frames[], int page, string pId, int frameCount, int victim) {
+  if (!frames[victim].getValid()) {
+    frames[victim].toggleValid();
+  }
+  frames[victim].setPageNum(page);
+  frames[victim].setId(pId);
+}
+
+// sees if the page is in the frames
+bool tryHitFrame(Frame frames[], int page, int frameCount) {
+  for (int i = 0; i < frameCount; i++) {
+    if (frames[i].getPageNum() == page) {
+      frames[i].incFrequency();
+      return true;
+    }
+  }
+  return false;
+}
