@@ -8,13 +8,12 @@
 #include "MFU.h"
 #include "pagerTools.h"
 
-// Main MFU function
-int mfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose) {
-  int totalPageFaults = 0; // total page faults across all pages
-  int pg;                   // current page being accessed
-  bool hit;                 // flag for page hit
-  int processPageFaults;    // page faults for current process
-  int victim;                  // frame index to replace
+int mfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose) {
+  int totalPageFaults = 0; 
+  int pg;                  
+  bool hit;                
+  int processPageFaults;   
+  int victim;              
  
   for (map<string, queue<int>>::iterator processIterator = pages.begin(); processIterator != pages.end(); ++processIterator) {
     string pId = processIterator->first;
@@ -28,7 +27,7 @@ int mfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
       
       if (verbose) cout << "Accessing page: " << pg << endl;
       
-      hit = tryHitFrame(frames, pg, frameNumbers);
+      hit = tryHitFrame(frames, pg, frameCount);
       
       if (!hit) {
 	totalPageFaults++;
@@ -36,7 +35,7 @@ int mfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
 	
 	if (verbose) cout << "Page Fault" << endl;
 	
-	victim = findMostFreqUsed(frames, frameNumbers); // frame with highest frequency
+	victim = findMostFreqUsed(frames, frameCount); 
 	
 	swapFrame(frames, pg, pId, victim);
 	
@@ -48,7 +47,6 @@ int mfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
   return totalPageFaults;
 }
 
-// Helper function to find the frame with the highest frequency
 int findMostFreqUsed(Frame frames[], int frameCount) {
   int highestFreq = -1;
   int mostFreqUsed = 0;

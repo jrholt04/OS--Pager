@@ -16,9 +16,9 @@
 using namespace std;
 
 // Simulate the MFU page swapping algorithm
-int mfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose);
+int mfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose);
 
 // Helper function to find the index of the frame with the highest frequency
-int findMostFreqUsed(Frame frames[], int frameNumbers);
+int findMostFreqUsed(Frame frames[], int frameCount);
 
 #endif

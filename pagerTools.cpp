@@ -11,7 +11,7 @@
 #include <queue>
 using namespace std;
 
-map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, int framesize) {
+map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, int frameSize) {
     map<string, queue<int>> pages;
     string pId;
     int memoryAddress;
@@ -33,7 +33,7 @@ map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, in
         }
         else {
             memoryAddress = stoi(temp);
-            page = memoryAddress / framesize; 
+            page = memoryAddress / frameSize; 
             pages[pId].push(page);
         }
     }
@@ -64,7 +64,6 @@ string getInputType(string input) {
   exit(0);
 }
 
-// prints out the helpful how to when the program is called with --help or -h
 void printPagerHelp(void) {
     cout << endl << endl
          << "This is a Paging simulator, with the ability to simulate First In First Out (FCFS), Most Recently Used (MRU), Least Recently Used (LRU), Random (RANDOM)" << endl << endl
@@ -85,7 +84,6 @@ void printPagerHelp(void) {
          << endl;
 }
 
-// swaps the frame information of the victim frame with new page
 void swapFrame(Frame frames[], int page, string pId, int victim) {
   if (!frames[victim].getValid()) {
     frames[victim].toggleValid();
@@ -94,7 +92,6 @@ void swapFrame(Frame frames[], int page, string pId, int victim) {
   frames[victim].setId(pId);
 }
 
-// sees if the page is in the frames
 bool tryHitFrame(Frame frames[], int page, int frameCount) {
   for (int i = 0; i < frameCount; i++) {
     if (frames[i].getPageNum() == page) {

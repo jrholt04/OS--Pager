@@ -17,6 +17,6 @@
 using namespace std;
 
 // Simulate the fifo page swapping algorithm
-int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose);
+int fifo(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose);
 
 #endif 

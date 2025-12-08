@@ -9,15 +9,15 @@
 #include "pagerTools.h"
 
 // Main MRU function
-int mru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose) {
-  int totalPageFaults = 0; // Total number of page faults across all pages
-  stack<int> frameStack;    // Stack to track recency of frames (top = most recently used)
-  int pg;                   // Current page being accessed
-  bool hit;                 // Flag to indicate if page is already in a frame
-  int processPageFaults;    // Page faults for the current process
-  int vic;                  // Frame index to replace (least recently used)
+int mru(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose) {
+  int totalPageFaults = 0;
+  stack<int> frameStack;  
+  int pg;                 
+  bool hit;               
+  int processPageFaults;  
+  int vic;                
   
-  for (int i = 0; i < frameNumbers; i++) {
+  for (int i = 0; i < frameCount; i++) {
     frameStack.push(i);
   }
   
@@ -33,7 +33,7 @@ int mru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
       
       if (verbose) cout << "Accessing page: " << pg << endl;
       
-      hit = tryMRUHitFrame(frames, frameStack, pg, frameNumbers);
+      hit = tryMRUHitFrame(frames, frameStack, pg, frameCount);
       
       if (!hit) {
 	totalPageFaults++;
@@ -41,14 +41,14 @@ int mru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
 	
 	if (verbose) cout << "Page Fault" << endl;
 	
-	vic = findLeastRecentlyUsed(frames, frameStack, frameNumbers); // frame to replace (least recently used)
+	vic = findMostRecentlyUsed(frames, frameStack, frameCount);
 	frameStack.pop();
 
 	swapFrame(frames, pg, pId, vic);
 	
 	if (verbose) cout << "Page: " << pg << " is now in frame: " << vic << endl;
 	
-	frameStack.push(vic); // move newly used frame to top
+	frameStack.push(vic);
       }
     }
     
@@ -58,7 +58,7 @@ int mru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
   return totalPageFaults;
 }
 
-int findLeastRecentlyUsed(Frame frames[], stack<int> frameStack, int frameCount) {
+int findMostRecentlyUsed(Frame frames[], stack<int> frameStack, int frameCount) {
   for (int i = 0; i < frameCount; i++) {
     if (frames[i].getPageNum() == -1) {
       return i;
@@ -76,7 +76,7 @@ bool tryMRUHitFrame(Frame frames[], stack<int> frameStack, int page, int frameCo
 	frameStack.pop();
 	if (idx != i) tempStack.push(idx);
       }
-      tempStack.push(i); // push recently used frame to top?
+      tempStack.push(i);
       frameStack = tempStack;
       return true;
     }

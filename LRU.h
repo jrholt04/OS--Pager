@@ -17,11 +17,10 @@
 using namespace std;
 
 // Simulate the LRU page swapping algorithm
-// frames: array of physical frames
-// pages: map of process IDs to queues of page numbers
-// frameNumbers: number of physical frames
-// verbose: if true, prints detailed step-by-step output
-int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose);
+int lru(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose);
 
-bool tryMRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCount);
+// Returns true if the page is found in a frame puts that frame at the front of the queue, and false if the page is not found
+// Requires a seperate function from tryHitFrame due to having to reorder the queue
+bool tryLRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCount);
+
 #endif

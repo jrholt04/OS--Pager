@@ -22,14 +22,17 @@ using namespace std;
 //      ...
 // and produces a map where the key is the P_id and the Value is the page each memory location is on
 // in the order that they appear.
-map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, int framesize);
+map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, int frameSize);
 
 string getInputType(string input);
 
+// prints out the helpful how to when the program is called with --help or -h
 void printPagerHelp(void);
 
+// swaps the frame information of the victim frame with new page
 void swapFrame(Frame frames[], int page, string pId, int victim);
 
+// sees if the page is in the frames
 bool tryHitFrame(Frame frames[], int page, int frameCount);
 
 #endif 

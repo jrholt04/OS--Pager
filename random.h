@@ -5,7 +5,7 @@
 //  random is a page swapping algorithm that swaps a page into a random frame 
 //  this is the interface of that algorithm
 #ifndef RANDOM_H
-#define RANDOME_H
+#define RANDOM_H
 
 #include <string>
 #include <iostream>

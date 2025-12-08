@@ -8,8 +8,7 @@
 #include "LRU.h"
 #include "pagerTools.h"
 
-// Main LRU function
-int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose) {
+int lru(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose) {
   int totalPageFaults = 0; 
   queue<int> frameQueue;    
   int pg;                   
@@ -17,7 +16,7 @@ int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
   int processPageFaults;   
   int vic;                
   
-  for (int i = 0; i < frameNumbers; i++) {
+  for (int i = 0; i < frameCount; i++) {
     frameQueue.push(i);
   }
   
@@ -33,7 +32,7 @@ int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
       
       if (verbose) cout << "Accessing page: " << pg << endl;
       
-      hit = tryMRUHitFrame(frames, frameQueue, pg, frameNumbers);
+      hit = tryLRUHitFrame(frames, frameQueue, pg, frameCount);
       
       if (!hit) {
 	totalPageFaults++;
@@ -41,14 +40,14 @@ int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
 	
 	if (verbose) cout << "Page Fault" << endl;
 	
-	vic = frameQueue.front(); // frame to replace (least recently used)
+	vic = frameQueue.front();
 	frameQueue.pop();
 
 	swapFrame(frames, pg, pId, vic);
 	
 	if (verbose) cout << "Page: " << pg << " is now in frame: " << vic << endl;
 	
-	frameQueue.push(vic); // move newly used frame to back
+	frameQueue.push(vic);
       }
     }
     
@@ -58,17 +57,16 @@ int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
   return totalPageFaults;
 }
 
-bool tryMRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCount) {
+bool tryLRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCount) {
   for (int i = 0; i < frameCount; i++) {
     if (frames[i].getPageNum() == page) {
-      // Page hit: update recency by moving frame to back of queue
       queue<int> tempQueue;
       while (!frameQueue.empty()) {
 	int idx = frameQueue.front();
 	frameQueue.pop();
 	if (idx != i) tempQueue.push(idx);
       }
-      tempQueue.push(i); // push recently used frame to back
+      tempQueue.push(i);
       frameQueue = tempQueue;
       return true;
     }

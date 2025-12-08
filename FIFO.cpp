@@ -7,12 +7,12 @@
 #include "FIFO.h"
 #include "pagerTools.h"
 
-int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
+int fifo(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose){
     int totalPageFaults = 0;
     queue<int> victims;
     int vic;
 
-    for (int i = 0; i < frameNumbers; i++) victims.push(i);
+    for (int i = 0; i < frameCount; i++) victims.push(i);
     
     for (auto it = pages.begin(); it != pages.end(); ++it) {
         string pId = it->first;
@@ -28,7 +28,7 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
             
             if(verbose) cout << "Accessing page: " << pg << endl;
 
-            hit = tryHitFrame(frames, pg, frameNumbers);
+            hit = tryHitFrame(frames, pg, frameCount);
             
             if(!hit){
                 totalPageFaults++;
