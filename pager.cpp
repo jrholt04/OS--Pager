@@ -1,11 +1,12 @@
 //File: pager.cpp
 //Author: J Holt, N Neagle, and A Seng, Transy U
 //Course: CS 3074 Operating Systems
-// 
+//
 //  Main program for a page swapping algorithms
 //  sources: 
 //      Map: https://www.geeksforgeeks.org/cpp/map-associative-containers-the-c-standard-template-library-stl/ accessed 12/3/25
 //      credit: Caroline
+
 #include <string>
 #include <iostream>
 #include <cstdio>
@@ -17,6 +18,7 @@
 #include "LRU.h"
 #include "MRU.h"
 #include "LFU.h"
+#include "MFU.h"
 #include "random.h"
 
 using namespace std;
@@ -47,10 +49,14 @@ int main (int argc, char **argv){
                 type = "mru";
                 i++;
             }
-	    else if (inputType == "LFU" || inputType == "lfu") {
-	      type = "lfu";
-	      i++;
-	    }
+            else if (inputType == "LFU" || inputType == "lfu") {
+                type = "lfu";
+                i++;
+            }
+            else if (inputType == "MFU" || inputType == "mfu") {
+                type = "mfu";
+                i++;
+            }
             else if (inputType == "RANDOM" || inputType == "random") {
                 type = "random";
                 i++;
@@ -100,7 +106,7 @@ int main (int argc, char **argv){
             fileName = argv[i];
         }
         else {
-            cout << "invalid flags --help for inforamtion on how to call pager" << endl;
+            cout << "invalid flags --help for information on how to call pager" << endl;
             exit(1);
         }
     }   
@@ -113,7 +119,7 @@ int main (int argc, char **argv){
         cout << "number of pages: " << pageNumbers << endl;
         cout << "verbose: " << verbose << endl << endl;
     }
-    
+
     Frame* frames = new Frame[frameNumbers];
     pages = readMemoryLocations(fileName, pageNumbers, framesize);
 
@@ -121,13 +127,16 @@ int main (int argc, char **argv){
         pageFaults = fifo(frames, pages, frameNumbers, verbose);
     }
     else if (type == "lru") {
-        lru(frames, pages, verbose);
+        pageFaults = lru(frames, pages, frameNumbers, verbose);
     }
     else if (type == "mru") {
-        mru(frames, pages, verbose);
+        pageFaults = mru(frames, pages, frameNumbers, verbose);
     }
     else if (type == "lfu") {
-      pageFaults = lfu(frames, pages, frameNumbers, verbose);
+        pageFaults = lfu(frames, pages, frameNumbers, verbose);
+    }
+    else if (type == "mfu") {
+        pageFaults = mfu(frames, pages, frameNumbers, verbose);
     }
     else if (type == "random") {
         pageFaults = pgRandom(frames, pages, frameNumbers, verbose);

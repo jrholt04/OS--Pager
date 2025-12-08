@@ -1,10 +1,10 @@
-##makefile for Paging
-##N Neagle, J Holt, and A Seng
+## makefile for Paging
+## N Neagle, J Holt, and A Seng
 
-pager: pager.o FIFO.o LRU.o MRU.o LFU.o random.o frame.o pagerTools.o
-	g++ pager.o FIFO.o LRU.o MRU.o LFU.o random.o frame.o pagerTools.o -o pager
+pager: pager.o FIFO.o LRU.o MRU.o LFU.o MFU.o random.o frame.o pagerTools.o
+	g++ pager.o FIFO.o LRU.o MRU.o LFU.o MFU.o random.o frame.o pagerTools.o -o pager
 
-pager.o: pager.cpp frame.h FIFO.h LRU.h MRU.h LFU.o random.h pagerTools.h
+pager.o: pager.cpp frame.h FIFO.h LRU.h MRU.h LFU.h MFU.h random.h pagerTools.h
 	g++ -c pager.cpp
 
 frame.o: frame.cpp frame.h
@@ -21,6 +21,9 @@ MRU.o: MRU.cpp MRU.h frame.h
 
 LFU.o: LFU.cpp LFU.h frame.h
 	g++ -c LFU.cpp
+
+MFU.o: MFU.cpp MFU.h frame.h
+	g++ -c MFU.cpp
 
 random.o: random.cpp random.h frame.h
 	g++ -c random.cpp
