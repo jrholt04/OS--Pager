@@ -5,18 +5,11 @@
 //  the LFU is a page swapping algorithm that swaps out the least frequenlty used frame
 //  this is the implmentation of that algorithm
 
-// still a work in progress mostly built off of FIFO - NN 12/4
 #include "LFU.h"
 
-int lfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose){
+int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose){
   int totalPageFaults = 0;
-  queue<int> victims;
-  int vic;
-  
-  //pick the first things to fill up the frames
-  for (int i = 0; i < frameNumbers; i++) { 
-    victims.push(i);
-  }
+  int victim;
   
   for (auto it = pages.begin(); it != pages.end(); ++it) {
     string pId = it->first;
@@ -24,57 +17,56 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool v
     bool hit;
     int processPageFaults = 0;
     
-    if(verbose){
-      cout << "Pid: " << pId << endl;
-    }
+    if(verbose) cout << "Pid: " << pId << endl;
     
-    while(!pages[pId].empty()){
+    while(!pages[pId].empty()) {
       pg = pages[pId].front();
       pages[pId].pop();
       
-      if(verbose){
-	cout << "Accessing page: " << pg << endl;
-      } 
-      hit = false;
-      for (int i = 0; i < frameNumbers; i++) {
-	if (frames[i].getPageNum() == pg) {
-	  frames[i].incFrequency();
-	  hit = true;
-	  break;
-	}
-      }
-      
+      if(verbose) cout << "Accessing page: " << pg << endl;
+   
+      hit = tryHitFrame(frames, pg, frameCount);
+
       if(!hit){
 	totalPageFaults++;
 	processPageFaults++;
 	
-	if(verbose){
-	  cout << "Page Fault" << endl;
-	}
+	if(verbose) cout << "Page Fault" << endl;
+    	
+	victim = swapFrame(frames, pg, pId, frameCount);
 	
-	//vic = victims.front();
-	vic = findLeastFreqUsed(frames, frameNumbers); // somethin like this
-	
-	if (!frames[vic].getValid()) {
-	  frames[vic].toggleValid();
-	}
-	frames[vic].setPageNum(pg);
-	frames[vic].setId(pId);
-	
-	if(verbose){
-	  cout << "Page: " << pg << " is now in frame: " << vic << endl;
-	} 
+	if(verbose) cout << "Page: " << pg << " is now in frame: " << victim << endl;
         
-	//victims.push(vic);
       }
     } 
-    if(verbose){
-      cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
-    }
+    if(verbose) cout << "Pid: " << pId <<" page faulted " << processPageFaults << " times" << endl;
   }
-  
   return totalPageFaults;
 }
+
+int swapFrame(Frame frames[], int page, string pId, int frameCount) {
+  int vic = findLeastFreqUsed(frames, frameCount);
+  
+  if (!frames[vic].getValid()) {
+    frames[vic].toggleValid();
+  }
+  frames[vic].setPageNum(page);
+  frames[vic].setId(pId);
+  
+  return vic;
+}
+
+bool tryHitFrame(Frame frames[], int page, int frameCount) {
+  for (int i = 0; i < frameCount; i++) {
+    if (frames[i].getPageNum() == page) {
+      frames[i].incFrequency();
+      return true;
+    }
+  }
+  return false;
+}
+    
+    
 
 int findLeastFreqUsed(Frame frames[], int frameCount) {
   int lowestFreq = -1;
@@ -94,7 +86,6 @@ int findLeastFreqUsed(Frame frames[], int frameCount) {
       leastFreqUsed = i;
     }
   }
-  cout << "Lowest Freq frame is " << leastFreqUsed << endl;
   return leastFreqUsed;
 }
     
