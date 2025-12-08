@@ -6,10 +6,15 @@
 #include <cstdio>
 #include <map>
 #include <queue>
+#include <stack>
 #include "frame.h"
 
 using namespace std;
 
-void mru(Frame frames[], map<string, queue<int>> pages, bool verbose);
+int mru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose);
+
+int findLeastRecentlyUsed(Frame frames[], stack<int> frameStack, int frameCount);
+
+bool tryMRUHitFrame(Frame frames[], stack<int> frameStack, int page, int frameCount);
 
 #endif

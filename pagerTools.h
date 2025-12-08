@@ -24,9 +24,11 @@ using namespace std;
 // in the order that they appear.
 map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, int framesize);
 
+string getInputType(string input);
+
 void printPagerHelp(void);
 
-void swapFrame(Frame frames[], int page, string pId, int frameCount, int victim);
+void swapFrame(Frame frames[], int page, string pId, int victim);
 
 bool tryHitFrame(Frame frames[], int page, int frameCount);
 

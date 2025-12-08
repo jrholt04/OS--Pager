@@ -41,28 +41,54 @@ map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, in
     return pages;
 }
 
+string getInputType(string input) {
+  if (input == "FIFO" || input == "fifo"){
+    return "fifo";
+  }
+  if (input == "LRU" || input == "lru"){
+    return "lru";
+  }
+  if (input == "MRU" || input == "mru"){
+    return "mru";
+  }
+  if (input == "LFU" || input == "lfu") {
+    return "lfu";
+  }
+  if (input == "MFU" || input == "mfu") {
+    return "mfu";
+  }
+  if (input == "RANDOM" || input == "random") {
+    return "random";
+  }
+  cout << "Algorithm return not found" << endl;
+  exit(0);
+}
+
+// prints out the helpful how to when the program is called with --help or -h
 void printPagerHelp(void) {
     cout << endl << endl
          << "This is a Paging simulator, with the ability to simulate First In First Out (FCFS), Most Recently Used (MRU), Least Recently Used (LRU), Random (RANDOM)" << endl << endl
          << "The program can be called with these command flags: " << endl << endl
          << "\n Usage: ./pager <cmd flags(optional)> <file name (optional)>" << endl
-         << "\t--type {FIFO, MRU, LRU, RANDOM}" << endl
+         << "\t--type or -t {FIFO, MRU, LRU, RANDOM}" << endl
          << "\t\tSelects what Paging algorithm you would like to select. The default is FIFO." << endl
-         << "\t--verbose or --v" << endl
+	 << "\t--verbose or -v" << endl
          << "\t\tPrints out a detailed description of the processes and information related to the Pager" << endl
-         << "\t--frames or --f" << endl
+         << "\t--frames or -fr" << endl
          << "\t\tthe input will set the number of frames in the simulation" << endl
-         << "\t--pages or --p" << endl
+         << "\t--pages or -p" << endl
          << "\t\tthe input will set the number of pages in the simulation" << endl
-         << "\t--framesize or --fs" << endl
+         << "\t--framesize or -fs" << endl
          << "\t\tthe input will set the size of the frames" << endl
-         << "\t--help or --h" << endl
+         << "\t--help or -h" << endl
          << "\t\tPrints out this helpful how-to!" << endl
+	 << "\t--file or -f {FILE NAME}" << endl
+	 << "\t\tUses the given file name as the input file. The default is pager.in." << endl
          << endl;
 }
 
 // swaps the frame information of the victim frame with new page
-void swapFrame(Frame frames[], int page, string pId, int frameCount, int victim) {
+void swapFrame(Frame frames[], int page, string pId, int victim) {
   if (!frames[victim].getValid()) {
     frames[victim].toggleValid();
   }

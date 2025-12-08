@@ -23,4 +23,5 @@ using namespace std;
 // verbose: if true, prints detailed step-by-step output
 int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose);
 
+bool tryMRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCount);
 #endif

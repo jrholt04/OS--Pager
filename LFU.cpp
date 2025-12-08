@@ -27,7 +27,7 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool ver
       if(verbose) cout << "Accessing page: " << pg << endl;
    
       hit = tryHitFrame(frames, pg, frameCount);
-
+      
       if(!hit){
 	totalPageFaults++;
 	processPageFaults++;
@@ -36,7 +36,7 @@ int lfu(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool ver
 
 	victim = findLeastFreqUsed(frames, frameCount);
     	
-	swapFrame(frames, pg, pId, frameCount, victim);
+	swapFrame(frames, pg, pId, victim);
 	
 	if(verbose) cout << "Page: " << pg << " is now in frame: " << victim << endl;
         

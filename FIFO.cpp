@@ -39,7 +39,7 @@ int fifo(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool 
                 vic = victims.front();
                 victims.pop();
 
-		swapFrame(frames, pg, pId, frameNumbers, vic);
+		swapFrame(frames, pg, pId, vic);
                 
                 if(verbose) cout << "Page: " << pg << " is now in frame: " << vic << endl;
                 
