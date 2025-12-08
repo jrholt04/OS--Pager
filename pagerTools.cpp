@@ -33,6 +33,10 @@ map<string, queue<int>> readMemoryLocations(string fileName, int pageNumbers, in
         }
         else {
             memoryAddress = stoi(temp);
+            if (memoryAddress >= (frameSize * pageNumbers)){
+              cout << "Invalid Memory Address" << endl;
+              exit(1);
+            }
             page = memoryAddress / frameSize; 
             pages[pId].push(page);
         }
