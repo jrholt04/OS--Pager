@@ -7,26 +7,27 @@ pager: pager.o FIFO.o LRU.o MRU.o LFU.o MFU.o random.o frame.o pagerTools.o
 pager.o: pager.cpp frame.h FIFO.h LRU.h MRU.h LFU.h MFU.h random.h pagerTools.h
 	g++ -c pager.cpp
 
-frame.o: frame.cpp frame.h
+frame.o: frame.cpp frame.o
 	g++ -c frame.cpp
 
-FIFO.o: FIFO.cpp FIFO.h frame.h
+FIFO.o: FIFO.cpp FIFO.h frame.o
 	g++ -c FIFO.cpp
 
-LRU.o: LRU.cpp LRU.h frame.h
+LRU.o: LRU.cpp LRU.h frame.o
 	g++ -c LRU.cpp
 
-MRU.o: MRU.cpp MRU.h frame.h
+MRU.o: MRU.cpp MRU.h frame.o
 	g++ -c MRU.cpp
 
-LFU.o: LFU.cpp LFU.h frame.h
+LFU.o: LFU.cpp LFU.h frame.o
 	g++ -c LFU.cpp
 
-MFU.o: MFU.cpp MFU.h frame.h
+MFU.o: MFU.cpp MFU.h frame.o
 	g++ -c MFU.cpp
 
-random.o: random.cpp random.h frame.h
+random.o: random.cpp random.h frame.o
 	g++ -c random.cpp
 
-pagerTools.o: pagerTools.cpp pagerTools.h frame.h
+pagerTools.o: pagerTools.cpp pagerTools.h frame.o
 	g++ -c pagerTools.cpp
+
