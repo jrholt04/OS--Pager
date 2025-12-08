@@ -70,10 +70,9 @@ bool tryMRUHitFrame(Frame frames[], queue<int> frameQueue, int page, int frameCo
       }
       tempQueue.push(i); // push recently used frame to back
       frameQueue = tempQueue;
-      
-      frames[i].incFrequency(); // keep track of frequency
       return true;
     }
   }
   return false;
 }
+
