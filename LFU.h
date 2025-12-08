@@ -2,8 +2,8 @@
 //Author: J Holt, N Neagle, and A Seng, Transy U
 //Course: CS 3074 Operating Systems
 // 
-//  the fifo is a page swapping algorithm that swaps out the first item in the queue
-//  this is the interface of that algorithm
+//  the LFU is a page swapping algorithm that swaps out the least frequenlty used frame
+//  this is the implmentation of that algorithm
 #ifndef LFU_H
 #define LFU_H
 

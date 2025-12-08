@@ -42,8 +42,8 @@ int main (int argc, char **argv){
     else if (arg == "--frames" || arg == "-fr"){
       frameNumbers = stoi(argv[i + 1]);
       if (frameNumbers <= 0){
-	cout << "Invalid number of frames." << endl;
-	exit(1);
+        cout << "Invalid number of frames." << endl;
+        exit(1);
       }
       i++;
     }
@@ -53,8 +53,8 @@ int main (int argc, char **argv){
     else if (arg == "--pages" || arg == "-p"){
       pageNumbers = stoi(argv[i + 1]);
       if (pageNumbers <= 0){
-	cout << "Invalid number of pages." << endl;
-	exit(1);
+	      cout << "Invalid number of pages." << endl;
+	      exit(1);
       }
       i++;
     }

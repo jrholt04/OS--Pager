@@ -10,12 +10,12 @@
 
 // Main LRU function
 int lru(Frame frames[], map<string, queue<int>>& pages, int frameNumbers, bool verbose) {
-  int totalPageFaults = 0; // Total number of page faults across all pages
-  queue<int> frameQueue;    // Queue to track recency of frames (front = least recently used)
-  int pg;                   // Current page being accessed
-  bool hit;                 // Flag to indicate if page is already in a frame
-  int processPageFaults;    // Page faults for the current process
-  int vic;                  // Frame index to replace (least recently used)
+  int totalPageFaults = 0; 
+  queue<int> frameQueue;    
+  int pg;                   
+  bool hit;                
+  int processPageFaults;   
+  int vic;                
   
   for (int i = 0; i < frameNumbers; i++) {
     frameQueue.push(i);
