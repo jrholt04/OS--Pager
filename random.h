@@ -12,6 +12,7 @@
 #include <cstdio>
 #include <map>
 #include <queue>
+#include <ctime>
 #include "frame.h"
 
 using namespace std;

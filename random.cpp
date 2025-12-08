@@ -9,7 +9,8 @@
 int pgRandom(Frame frames[], map<string, queue<int>>& pages, int frameCount, bool verbose){
     int totalPageFaults = 0;
     int vic;
-    
+    srand(time(NULL));
+
     for (auto it = pages.begin(); it != pages.end(); ++it) {
         string pId = it->first;
         int pg;
